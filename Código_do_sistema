@@ -1,0 +1,48 @@
+import datetime
+
+class Produto:
+    def __init__(self, nome, codigo, validade):
+        self.nome = nome
+        self.codigo = codigo
+        self.validade = validade
+
+    def verificar_validade(self):
+        hoje = datetime.date.today()
+        if hoje > self.validade:
+            return f"Produto {self.nome} com código {self.codigo} está vencido!"
+        else:
+            return f"Produto {self.nome} com código {self.codigo} está dentro da validade."
+
+class CadastroProdutos:
+    def __init__(self):
+        self.produtos = {}
+
+    def cadastrar_produto(self, produto):
+        self.produtos[produto.codigo] = produto
+
+    def listar_produtos(self):
+        for codigo, produto in self.produtos.items():
+            print(f"Código: {codigo}, Nome: {produto.nome}, Validade: {produto.validade}")
+
+    def notificar_validade(self):
+        for codigo, produto in self.produtos.items():
+            print(produto.verificar_validade())
+
+# Exemplo de uso
+if __name__ == "__main__":
+    cadastro = CadastroProdutos()
+
+    # Cadastrando produtos de exemplo
+    produto1 = Produto("Arroz", "001", datetime.date(2024, 6, 30))
+    produto2 = Produto("Feijão", "002", datetime.date(2024, 7, 15))
+
+    cadastro.cadastrar_produto(produto1)
+    cadastro.cadastrar_produto(produto2)
+
+    # Listar produtos cadastrados
+    print("Produtos cadastrados:")
+    cadastro.listar_produtos()
+
+    # Verificar e notificar validade
+    print("\nNotificações de validade:")
+    cadastro.notificar_validade()
